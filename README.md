@@ -1,37 +1,37 @@
 # GitHub Actions Docker CI/CD Demo
 
-Bu proje, GitHub Actions kullanarak otomatik Docker image build ve deploy sürecini gösterir.
+This project demonstrates automated Docker image build and deployment process using GitHub Actions.
 
-## 🎯 Ne Yapıyor?
+## 🎯 What Does It Do?
 
-1. Her `git push` ile otomatik olarak Docker image build edilir
-2. Testler otomatik çalışır
-3. Image GitHub Container Registry'ye (ghcr.io) push edilir
-4. Image versiyon ile tag'lenir
+1. Automatically builds Docker image on every `git push`
+2. Runs tests automatically
+3. Pushes image to GitHub Container Registry (ghcr.io)
+4. Tags image with versions
 
-## 🚀 Kurulum
+## 🚀 Setup
 
-### 1. Bu Repoyu Fork/Clone Edin
+### 1. Fork/Clone This Repository
 
 ```bash
 git clone https://github.com/YOURUSERNAME/github-actions-demo.git
 cd github-actions-demo
 ```
 
-### 2. Local'de Test Edin
+### 2. Test Locally
 
 ```bash
-# Docker image build et
+# Build Docker image
 docker build -t myapp:local .
 
-# Çalıştır
+# Run it
 docker run -p 3000:3000 myapp:local
 
-# Test et
+# Test it
 curl http://localhost:3000
 ```
 
-### 3. GitHub'a Push Edin
+### 3. Push to GitHub
 
 ```bash
 git add .
@@ -39,14 +39,14 @@ git commit -m "Initial commit"
 git push origin main
 ```
 
-**Otomatik olarak:**
-- ✅ Docker image build edilir
-- ✅ Testler çalışır
-- ✅ ghcr.io'ya push edilir
+**Automatically:**
+- ✅ Docker image is built
+- ✅ Tests run
+- ✅ Pushed to ghcr.io
 
-## 📦 Image Kullanımı
+## 📦 Using the Image
 
-### GitHub Container Registry'den Pull
+### Pull from GitHub Container Registry
 
 ```bash
 # Latest version
@@ -55,11 +55,11 @@ docker pull ghcr.io/YOURUSERNAME/github-actions-demo:latest
 # Specific version
 docker pull ghcr.io/YOURUSERNAME/github-actions-demo:v1.0.0
 
-# Çalıştır
+# Run it
 docker run -p 3000:3000 ghcr.io/YOURUSERNAME/github-actions-demo:latest
 ```
 
-## 🔧 Proje Yapısı
+## 🔧 Project Structure
 
 ```
 github-actions-demo/
@@ -67,129 +67,129 @@ github-actions-demo/
 │   └── workflows/
 │       └── docker-publish.yml    # GitHub Actions pipeline
 ├── src/
-│   ├── app.js                     # Ana uygulama
-│   └── app.test.js                # Testler
-├── Dockerfile                      # Docker image tanımı
-├── .dockerignore                   # Build'e dahil edilmeyecekler
+│   ├── app.js                     # Main application
+│   └── app.test.js                # Tests
+├── Dockerfile                      # Docker image definition
+├── .dockerignore                   # Files excluded from build
 ├── package.json                    # Node.js dependencies
-└── README.md                       # Bu dosya
+└── README.md                       # This file
 ```
 
-## 🔄 Pipeline Akışı
+## 🔄 Pipeline Flow
 
 ```
 Git Push
     ↓
-GitHub Actions Tetiklenir
+GitHub Actions Triggered
     ↓
-Docker Image Build Edilir
+Docker Image Built
     ↓
-Testler Çalışır (Container içinde!)
+Tests Run (Inside Container!)
     ↓
-✅ Başarılı → Image Push Edilir
+✅ Success → Image Pushed
     ↓
 ghcr.io/username/repo:latest
 ghcr.io/username/repo:sha-abc123
 ghcr.io/username/repo:v1.0.0
 ```
 
-## 📊 GitHub Actions Özellikleri
+## 📊 GitHub Actions Features
 
-### Otomatik Triggers
+### Automatic Triggers
 
-- `main` branch'e push
-- Pull request oluşturulduğunda
-- Tag oluşturulduğunda (`v*`)
+- Push to `main` branch
+- Pull request created
+- Tag created (`v*`)
 
 ### Image Tagging
 
-- `latest`: En son version
-- `sha-xxx`: Spesifik commit
+- `latest`: Latest version
+- `sha-xxx`: Specific commit
 - `v1.0.0`: Semantic versioning
 
-## 🎯 Hands-On Egzersiz
+## 🎯 Hands-On Exercise
 
-### Görev 1: Kodu Değiştir ve Push Et
+### Task 1: Change Code and Push
 
-1. `src/app.js` dosyasını aç
-2. Message'ı değiştir
-3. Commit ve push et
-4. GitHub → Actions sekmesine git
-5. Pipeline'ın çalıştığını izle
+1. Open `src/app.js`
+2. Change the message
+3. Commit and push
+4. Go to GitHub → Actions tab
+5. Watch the pipeline run
 
-### Görev 2: Yeni Özellik Ekle
+### Task 2: Add New Feature
 
-1. `src/app.js`'e yeni endpoint ekle
-2. Test yaz (`src/app.test.js`)
-3. Push et
-4. Testlerin geçtiğini doğrula
-5. Yeni image'ı pull edip test et
+1. Add new endpoint to `src/app.js`
+2. Write test (`src/app.test.js`)
+3. Push
+4. Verify tests pass
+5. Pull new image and test
 
-### Görev 3: Version Release
+### Task 3: Version Release
 
-1. Tag oluştur:
+1. Create tag:
    ```bash
    git tag v1.0.0
    git push origin v1.0.0
    ```
-2. Actions'da tag build'ini izle
-3. Image'ı version ile pull et:
+2. Watch tag build in Actions
+3. Pull image with version:
    ```bash
    docker pull ghcr.io/YOURUSERNAME/github-actions-demo:v1.0.0
    ```
 
 ## 🔍 Troubleshooting
 
-### Image Private ve Pull Edilemiyor?
+### Image is Private and Can't Pull?
 
 ```bash
-# GitHub token ile login
+# Login with GitHub token
 echo $GITHUB_TOKEN | docker login ghcr.io -u USERNAME --password-stdin
 
-# Veya Personal Access Token kullan
+# Or use Personal Access Token
 docker login ghcr.io -u USERNAME
 # Password: ghp_xxxxxxxxxxxx
 ```
 
-### Actions Fail Oluyor?
+### Actions Failing?
 
-1. Actions sekmesinde log'ları kontrol et
-2. Hangi step'te fail olduğunu bul
-3. Local'de aynı komutu çalıştır:
+1. Check logs in Actions tab
+2. Find which step failed
+3. Run same command locally:
    ```bash
    docker build -t test .
    docker run --rm test npm test
    ```
 
-## 📚 Öğrenilen Konular
+## 📚 Topics Learned
 
-- ✅ GitHub Actions workflow yazma
-- ✅ Docker image otomatik build
-- ✅ Container içinde test çalıştırma
-- ✅ GitHub Container Registry kullanma
+- ✅ Writing GitHub Actions workflows
+- ✅ Automatic Docker image builds
+- ✅ Running tests in containers
+- ✅ Using GitHub Container Registry
 - ✅ Image versioning
-- ✅ CI/CD pipeline oluşturma
+- ✅ Creating CI/CD pipelines
 
-## 🔗 Faydalı Linkler
+## 🔗 Useful Links
 
 - [GitHub Actions Docs](https://docs.github.com/en/actions)
 - [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
 - [Docker Best Practices](https://docs.docker.com/develop/dev-best-practices/)
 
-## 💡 İpuçları
+## 💡 Tips
 
-**Build Hızlandırma:**
-- Layer caching kullan
-- Multi-stage builds kullan
-- .dockerignore dosyası ekle
+**Speed Up Builds:**
+- Use layer caching
+- Use multi-stage builds
+- Add .dockerignore file
 
-**Güvenlik:**
-- Secrets kullan (hardcode etme!)
-- Image'ları scan et (Trivy)
-- En minimal base image kullan
+**Security:**
+- Use secrets (don't hardcode!)
+- Scan images (Trivy)
+- Use minimal base images
 
 **Best Practices:**
-- Her özellik için test yaz
-- Semantic versioning kullan
-- README'yi güncel tut
-- Commit message'ları açıklayıcı yaz
+- Write tests for every feature
+- Use semantic versioning
+- Keep README updated
+- Write descriptive commit messages

@@ -2,10 +2,10 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Basit bir JSON response
+// Simple JSON response
 app.get('/', (req, res) => {
   res.json({
-    message: 'Merhaba! GitHub Actions ile otomatik deploy edildi! 🚀',
+    message: 'Hello! Automatically deployed with GitHub Actions! 🚀',
     version: process.env.APP_VERSION || '1.0.0',
     environment: process.env.NODE_ENV || 'development',
     timestamp: new Date().toISOString(),
@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// Health check endpoint (Docker için önemli!)
+// Health check endpoint (important for Docker!)
 app.get('/health', (req, res) => {
   res.json({ 
     status: 'healthy',
@@ -22,15 +22,15 @@ app.get('/health', (req, res) => {
   });
 });
 
-// API bilgi endpoint
+// API info endpoint
 app.get('/api/info', (req, res) => {
   res.json({
     name: 'GitHub Actions Demo API',
     version: '1.0.0',
     endpoints: [
-      { path: '/', method: 'GET', description: 'Ana sayfa' },
-      { path: '/health', method: 'GET', description: 'Sağlık kontrolü' },
-      { path: '/api/info', method: 'GET', description: 'API bilgileri' }
+      { path: '/', method: 'GET', description: 'Home page' },
+      { path: '/health', method: 'GET', description: 'Health check' },
+      { path: '/api/info', method: 'GET', description: 'API information' }
     ]
   });
 });
@@ -38,20 +38,20 @@ app.get('/api/info', (req, res) => {
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({
-    error: 'Endpoint bulunamadı',
+    error: 'Endpoint not found',
     path: req.path,
-    suggestion: 'Kullanılabilir endpoint\'ler için /api/info adresini ziyaret edin'
+    suggestion: 'Visit /api/info for available endpoints'
   });
 });
 
-// Sadece direkt çalıştırıldığında server başlat (test için değil)
+// Start server only when run directly (not for tests)
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`🚀 Server ${PORT} portunda çalışıyor`);
+    console.log(`🚀 Server running on port ${PORT}`);
     console.log(`📍 http://localhost:${PORT}`);
     console.log(`💚 Health check: http://localhost:${PORT}/health`);
   });
 }
 
-// Test için export et
+// Export for tests
 module.exports = app;
