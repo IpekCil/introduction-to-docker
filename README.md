@@ -6,17 +6,104 @@ This repository contains hands-on examples, exercises, and sample projects for l
 
 ```
 introduction-to-docker/
+├── .github/
+│   └── workflows/
+│       └── docker-publish.yml         # GitHub Actions CI/CD workflow
 ├── examples/                           # Hands-on examples and projects
 │   └── docker-cicd-github-actions/    # GitHub Actions CI/CD pipeline example
-├── Dockerfiles/                        # Dockerfile examples (if any)
+├── hands-on-exercises/                 # Practical exercises for each topic
+│   ├── Networks-Exercises.md          # Docker networking exercises
+│   ├── Volumes-Exercises.md           # Data persistence exercises
+│   ├── Compose-Exercises.md           # Docker Compose exercises
+│   ├── Troubleshooting-Exercises.md   # Debugging and troubleshooting exercises
+│   └── group-exercise/                # Collaborative microservices project
+│       ├── GROUP-EXERCISE-INSTRUCTIONS.md
+│       ├── docker-compose.yml
+│       └── ...
+├── Dockerfiles/                        # Dockerfile examples and best practices
+│   ├── Dockerfile.bad-layers          # ❌ Poor layer caching example
+│   ├── Dockerfile.good-layers         # ✅ Optimized layer caching
+│   ├── Dockerfile.nodejs-multistage   # Multi-stage build example
+│   ├── Dockerfile.build-args          # Build arguments example
+│   ├── Dockerfile.cmd                 # CMD instruction example
+│   ├── Dockerfile.entrypoint          # ENTRYPOINT instruction example
+│   ├── Dockerfile.entrypoint-cmd      # ENTRYPOINT + CMD best practice
+│   └── README.md                      # Detailed Dockerfile examples guide
 └── README.md                           # This file
 ```
 
 ---
 
-## 🎯 Available Examples
+## 🎯 What's Inside
 
-### 1. Docker CI/CD with GitHub Actions
+### 1. Hands-On Exercises
+
+**Location:** [`hands-on-exercises/`](hands-on-exercises/)
+
+Four comprehensive exercise sets covering core Docker concepts:
+
+#### **Docker Networks** ([Networks-Exercises.md](hands-on-exercises/Networks-Exercises.md))
+- 5 progressive exercises + challenge
+- Bridge, host, and custom networks
+- Multi-container communication
+- Network isolation and DNS
+- Real-world microservices networking
+
+#### **Docker Volumes** ([Volumes-Exercises.md](hands-on-exercises/Volumes-Exercises.md))
+- 7 progressive exercises + challenge
+- Named volumes vs bind mounts
+- Database data persistence
+- Volume backup and restore
+- Development workflows with hot reload
+- Read-only mounts and permissions
+
+#### **Docker Compose** ([Compose-Exercises.md](hands-on-exercises/Compose-Exercises.md))
+- 6 progressive exercises + challenge
+- Multi-container applications
+- Service dependencies and networking
+- Environment configurations
+- Health checks and restart policies
+- WordPress, full-stack Node.js apps
+
+#### **Troubleshooting** ([Troubleshooting-Exercises.md](hands-on-exercises/Troubleshooting-Exercises.md))
+- 7 practical debugging scenarios
+- Container startup failures
+- Out of memory issues
+- Network connectivity problems
+- Volume and permission issues
+- Log analysis techniques
+- Multi-container debugging
+
+#### **Group Exercise** ([group-exercise/](hands-on-exercises/group-exercise/))
+- Collaborative 4-team microservices project
+- Each team builds and pushes a service to Docker Hub
+- Final integration with docker-compose
+- Simulates real-world team workflows
+
+### 2. Dockerfile Examples
+
+### 2. Dockerfile Examples
+
+**Location:** [`Dockerfiles/`](Dockerfiles/)
+
+**What it demonstrates:**
+- ✅ Optimized layer caching (good vs bad examples)
+- ✅ Multi-stage builds for smaller images
+- ✅ Build arguments and environment variables
+- ✅ CMD vs ENTRYPOINT best practices
+- ✅ Real-world Node.js application patterns
+
+**Key files:**
+- `Dockerfile.bad-layers` - Shows what NOT to do (slow rebuilds)
+- `Dockerfile.good-layers` - Optimized caching (3-second rebuilds!)
+- `Dockerfile.nodejs-multistage` - Production-ready multi-stage build
+- `Dockerfile.build-args` - Configuration with build arguments
+- `Dockerfile.entrypoint-cmd` - Best practice for CMD + ENTRYPOINT
+
+**Documentation:**
+- [Dockerfiles/README.md](Dockerfiles/README.md) - Complete guide with examples
+
+### 3. CI/CD with GitHub Actions
 
 **Location:** [`examples/docker-cicd-github-actions/`](examples/docker-cicd-github-actions/)
 
@@ -79,20 +166,36 @@ Each example has its own README with:
 
 **Recommended order:**
 
-1. **Docker Basics** (external resources)
-   - Install Docker Desktop
-   - Learn basic commands (`run`, `build`, `ps`, `stop`)
-   - Understand images and containers
+1. **Dockerfile Basics** ⭐ **Start here!**
+   - Go to `Dockerfiles/` folder
+   - Study layer caching examples (bad vs good)
+   - Learn multi-stage builds
+   - Practice with build arguments
 
-2. **Dockerfile Basics** (external resources)
-   - Write your first Dockerfile
-   - Understand layers and caching
-   - Multi-stage builds
+2. **Docker Networks**
+   - Complete exercises in `hands-on-exercises/Networks-Exercises.md`
+   - Learn bridge, host, and custom networks
+   - Practice container-to-container communication
 
-3. **CI/CD with GitHub Actions** ⭐ **Start here!**
+3. **Docker Volumes**
+   - Complete exercises in `hands-on-exercises/Volumes-Exercises.md`
+   - Master data persistence
+   - Practice backup and restore
+
+4. **Docker Compose**
+   - Complete exercises in `hands-on-exercises/Compose-Exercises.md`
+   - Build multi-container applications
+   - Work on the collaborative group exercise
+
+5. **Troubleshooting**
+   - Complete exercises in `hands-on-exercises/Troubleshooting-Exercises.md`
+   - Learn debugging techniques
+   - Practice fixing common issues
+
+6. **CI/CD with GitHub Actions** ⭐ **Advanced!**
    - Go to `examples/docker-cicd-github-actions/`
-   - Follow the QUICK-START guide
-   - Complete hands-on exercises
+   - Set up automated workflows
+   - Deploy to container registries
 
 ---
 
@@ -107,12 +210,15 @@ Each example has its own README with:
 
 ## 🔧 Technologies Covered
 
-- **Docker:** Containerization, images, multi-stage builds
-- **CI/CD:** GitHub Actions, automated workflows
-- **Container Registries:** GitHub Container Registry (ghcr.io)
-- **Testing:** Running tests in containers
+- **Docker:** Containerization, images, multi-stage builds, layer optimization
+- **Networking:** Bridge networks, custom networks, DNS, service discovery
+- **Storage:** Named volumes, bind mounts, data persistence, backups
+- **Compose:** Multi-container apps, service dependencies, orchestration
+- **CI/CD:** GitHub Actions, automated workflows, container registries
+- **Troubleshooting:** Debugging, log analysis, resource monitoring
+- **Testing:** Running tests in containers, health checks
 - **Security:** Vulnerability scanning, best practices
-- **DevOps:** Automation, deployment strategies
+- **DevOps:** Automation, deployment strategies, team workflows
 
 ---
 
@@ -154,8 +260,20 @@ This repository is for educational purposes. See individual examples for specifi
 
 ## 🎯 Quick Navigation
 
+### Hands-On Exercises
+- [Docker Networks Exercises →](hands-on-exercises/Networks-Exercises.md)
+- [Docker Volumes Exercises →](hands-on-exercises/Volumes-Exercises.md)
+- [Docker Compose Exercises →](hands-on-exercises/Compose-Exercises.md)
+- [Troubleshooting Exercises →](hands-on-exercises/Troubleshooting-Exercises.md)
+- [Group Exercise (4 Teams) →](hands-on-exercises/group-exercise/)
+
+### Examples & Guides
+- [Dockerfile Examples →](Dockerfiles/)
 - [Docker CI/CD Example →](examples/docker-cicd-github-actions/)
 - [Quick Start Guide →](examples/docker-cicd-github-actions/QUICK-START.md)
 - [Training Guide →](examples/docker-cicd-github-actions/TRAINING-GUIDE.md)
+
+### GitHub Actions
+- [CI/CD Workflow →](.github/workflows/docker-publish.yml)
 
 **Start learning Docker today!** 🚀
